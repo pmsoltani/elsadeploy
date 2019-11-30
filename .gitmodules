@@ -1,0 +1,8 @@
+[submodule "elsaserver"]
+	path = elsaserver
+	url = https://github.com/pmsoltani/elsaserver.git
+	branch = dev
+[submodule "react-dash"]
+	path = react-dash
+	url = https://github.com/pmsoltani/react-dash.git
+	branch = dev
