@@ -1,11 +1,33 @@
 version: '3.5'
 
 services:
+  client:
+    container_name: react-dash
+    env_file: .env
+    environment:
+      - REACT_APP_ENV=${REACT_APP_ENV}
+      - REACT_APP_DOMAIN_PROD=${REACT_APP_DOMAIN_PROD}
+      - REACT_APP_DOMAIN_STAG=${REACT_APP_DOMAIN_STAG}
+      - REACT_APP_DOMAIN_DEV=${REACT_APP_DOMAIN_DEV}
+    restart: always
+    build:
+      context: ./react-dash
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_ENV=${REACT_APP_ENV}
+        - REACT_APP_DOMAIN_PROD=${REACT_APP_DOMAIN_PROD}
+        - REACT_APP_DOMAIN_STAG=${REACT_APP_DOMAIN_STAG}
+        - REACT_APP_DOMAIN_DEV=${REACT_APP_DOMAIN_DEV}
+    depends_on:
+      - api
+    ports:
+      - 80:80
+
   api:
     container_name: elsaserver
     env_file: .env
     environment:
-      - SERVER_PORT=${SERVER_PORT}
+      - BACKEND_PORT=${BACKEND_PORT}
     restart: always
     build:
       context: ./elsaserver
@@ -13,7 +35,7 @@ services:
     depends_on:
       - db
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
+      - ${BACKEND_PORT}:${BACKEND_PORT}
 
   db:
     container_name: elsametric
