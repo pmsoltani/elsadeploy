@@ -10,5 +10,7 @@ ENV DB_RESTORE=${DB_RESTORE}
 ENV POSTGRES_DB=${POSTGRES_DB}
 ENV POSTGRES_USER=${POSTGRES_USER}
 
-COPY ./db_restore.sh /
-RUN ["chmod", "+x", "/db_restore.sh"]
+# Add a script to a special location inside the container, which will be
+# executed when the container is up and running.
+ADD ./db_restore.sh /docker-entrypoint-initdb.d
+EXPOSE 5432
