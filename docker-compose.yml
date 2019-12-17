@@ -21,7 +21,7 @@ services:
     depends_on:
       - api
     ports:
-      - 80:80
+      - "80:80"
 
   api:
     container_name: elsaserver
@@ -34,8 +34,10 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
+    expose:
+      - "${BACKEND_PORT}"
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
 
   db:
     container_name: elsametric
@@ -51,7 +53,7 @@ services:
       context: ./db
       dockerfile: Dockerfile
     ports:
-      - ${DB_POSTGRESQL_PORT}:${DB_POSTGRESQL_PORT}
+      - "${DB_POSTGRESQL_PORT}:${DB_POSTGRESQL_PORT}"
     volumes:
-      - ~/Downloads/${DB_POSTGRESQL_CONTAINER_NAME}:/var/lib/postgresql
-      - ~/Downloads/${DB_POSTGRESQL_CONTAINER_NAME}/data:/var/lib/postgresql/data
+      - ~/${DB_POSTGRESQL_CONTAINER_NAME}:/var/lib/postgresql
+      - ~/${DB_POSTGRESQL_CONTAINER_NAME}/data:/var/lib/postgresql/data
